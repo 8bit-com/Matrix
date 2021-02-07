@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Matrix
+﻿namespace Matrix
 {
     static class Const
     {
@@ -14,6 +10,6 @@ namespace Matrix
 
         public const int BGNKTK = 12449; //Начальное значение Unicode Katakana
 
-        public const int ENDKTK = 12449; //Конечное значение Unicode Katakana
+        public const int ENDKTK = 12539; //Конечное значение Unicode Katakana
     }
 }

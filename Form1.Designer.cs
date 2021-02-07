@@ -33,15 +33,12 @@ namespace Matrix
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // timer1
-            // 
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1188, 617);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(7)))), ((int)(((byte)(0)))));
+            this.ClientSize = new System.Drawing.Size(1040, 617);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
