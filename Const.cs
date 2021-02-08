@@ -6,7 +6,7 @@
 
         public const  int HIGHT    = 35;    //Высота поля
 
-        public static int SIZE     = 30;    //Размер символа
+        public static int SIZE     = 70;    //Размер символа
 
         public const  int BGN_KTK  = 12449; //Начальное значение Unicode Katakana
 

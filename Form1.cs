@@ -61,12 +61,10 @@ namespace Matrix
                 for (int X = 0; X < labels[0].Length; X++)
                 {
                     labels[Y][X]           = new Label();
-                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 14F);
-                    labels[Y][X].Text      = " ";                    
+                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 40F);
+                    labels[Y][X].Text      = "";                    
                     labels[Y][X].AutoSize  = true;                    
                     labels[Y][X].Location  = new Point(X * SIZE, Y * SIZE);
-                    labels[Y][X].ForeColor = Color.Green;
-                    labels[Y][X].BackColor = Color.Transparent;
                     Controls.Add(labels[Y][X]);
                 }
             }
@@ -99,7 +97,7 @@ namespace Matrix
 
                 if (runPst[Y] > 12)
                 {
-                    labels[runPst[Y] - 13][Y].Text     = " ";
+                    labels[runPst[Y] - 13][Y].Text     = "";
                 }
 
                 if (runPst[Y] < HIGHT - 1)
@@ -108,9 +106,9 @@ namespace Matrix
                 }
                 else
                 {
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 0; i < 13; i++)
                     {
-                        labels[runPst[Y] - i][Y].Text = " ";
+                        labels[runPst[Y] - i][Y].Text = "";
                     }
                     
                     runPst[Y] = 0;
