@@ -58,12 +58,13 @@ namespace Matrix
 
                 for (int X = 0; X < labels[0].Length; X++)
                 {
-                    labels[Y][X] = new Label();
-                    labels[Y][X].Text = " ";
-                    labels[Y][X].BackColor = Color.Transparent;
-                    labels[Y][X].AutoSize = true;
+                    labels[Y][X]           = new Label();
+                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 12F);
+                    labels[Y][X].Text      = " ";                    
+                    labels[Y][X].AutoSize  = true;                    
+                    labels[Y][X].Location  = new Point(X * SIZE, Y * SIZE);
                     labels[Y][X].ForeColor = Color.Green;
-                    labels[Y][X].Location = new Point(X * SIZE, Y * SIZE);
+                    labels[Y][X].BackColor = Color.Transparent;
                     Controls.Add(labels[Y][X]);
                 }
             }
