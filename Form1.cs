@@ -13,11 +13,7 @@ namespace Matrix
 
         Random rand      = new Random();
 
-        int[] Count      = new int[RUN_CHAR];
-
         int[] runPst     = new int[RUN_CHAR];
-
-        int[] xCordRnd   = new int[RUN_CHAR];
         public Form1()
         {
             InitializeComponent();
@@ -32,8 +28,14 @@ namespace Matrix
 
             for (int i = 0; i < RUN_CHAR; i++)
             {
-                TimerInit(i, (rand.Next(0, 500)) );
+                TimerInit(i, RandIntrv());
             }
+        }
+        private int RandIntrv()
+        {
+            int i = rand.Next(0, 10);
+
+            return i == 0 ? 1: rand.Next(0, 300);
         }
         private void TimerInit(int index, int interval)
         {
@@ -48,8 +50,6 @@ namespace Matrix
             for (int i = 0; i < timer.Length; i++)
             {
                 timer[i]    = new Timer();
-
-                xCordRnd[i] = rand.Next(0, 20);
             }
         }
         private void ArrayLabelInit()
@@ -61,7 +61,7 @@ namespace Matrix
                 for (int X = 0; X < labels[0].Length; X++)
                 {
                     labels[Y][X]           = new Label();
-                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 12F);
+                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 14F);
                     labels[Y][X].Text      = " ";                    
                     labels[Y][X].AutoSize  = true;                    
                     labels[Y][X].Location  = new Point(X * SIZE, Y * SIZE);
@@ -73,6 +73,7 @@ namespace Matrix
         }
         private void update(object sender, EventArgs e)
         {
+
             for (int i = 0; i < timer.Length; i++)
             {
                 Step(sender, i);
@@ -82,46 +83,37 @@ namespace Matrix
         {
             if (sender == timer[Y])
             {
-                labels[ runPst[Y] ][ Y * 2 + xCordRnd[Y] ].Text      = GetRandString();
-                labels[ runPst[Y] ][ Y * 2 + xCordRnd[Y] ].ForeColor = Color.White;
+                labels[ runPst[Y] ][ Y ].Text      = GetRandString();
+                labels[ runPst[Y] ][ Y ].ForeColor = Color.White;
 
                 if (runPst[Y] > 0)
                 {
-                    labels[runPst[Y] - 1][Y * 2 + xCordRnd[Y]].ForeColor = Color.LightGreen;
-                    labels[runPst[Y] - 1][Y * 2 + xCordRnd[Y]].Text      = GetRandString();
+                    labels[runPst[Y] - 1][Y].ForeColor = Color.LightGreen;
+                    labels[runPst[Y] - 1][Y].Text      = GetRandString();
                 }
 
                 if (runPst[Y] > 1)
                 {
-                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].ForeColor = Color.DarkSeaGreen;
-                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].Text      = GetRandString();
+                    labels[runPst[Y] - 2][Y].ForeColor = Color.DarkGreen;
                 }
 
-                if (runPst[Y] > 5)
+                if (runPst[Y] > 12)
                 {
-                    labels[runPst[Y] - 6][Y * 2 + xCordRnd[Y]].Text      = " ";
+                    labels[runPst[Y] - 13][Y].Text     = " ";
                 }
 
                 if (runPst[Y] < HIGHT - 1)
                 {
-                    if (Count[Y] > 2)
-                    {
-                        runPst[Y]++;
-
-                        Count[Y] = 0;
-                    }
-                    else Count[Y]++;
+                    runPst[Y]++;
                 }
                 else
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 12; i++)
                     {
-                        labels[runPst[Y] - i][Y * 2 + xCordRnd[Y]].Text = " ";
+                        labels[runPst[Y] - i][Y].Text = " ";
                     }
                     
                     runPst[Y] = 0;
-
-                    xCordRnd[Y] = rand.Next(0, 20);
                 }
             }
         }
