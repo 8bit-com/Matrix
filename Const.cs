@@ -11,5 +11,7 @@
         public const int BGNKTK = 12449; //Начальное значение Unicode Katakana
 
         public const int ENDKTK = 12539; //Конечное значение Unicode Katakana
+
+        public const int PSTDMK = 7; //Колличество бегущих столбцов
     }
 }
