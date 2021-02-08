@@ -93,7 +93,7 @@ namespace Matrix
 
                 if (runPst[Y] > 1)
                 {
-                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].ForeColor = Color.Green;
+                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].ForeColor = Color.DarkSeaGreen;
                     labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].Text      = GetRandString();
                 }
 
@@ -114,6 +114,11 @@ namespace Matrix
                 }
                 else
                 {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        labels[runPst[Y] - i][Y * 2 + xCordRnd[Y]].Text = " ";
+                    }
+                    
                     runPst[Y] = 0;
 
                     xCordRnd[Y] = rand.Next(0, 20);
