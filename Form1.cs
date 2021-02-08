@@ -20,7 +20,7 @@ namespace Matrix
             
             Init();
         }
-        void Init()
+        private void Init()
         {
             ArrayLabelInit();
 
@@ -28,10 +28,10 @@ namespace Matrix
 
             for (int i = 0; i < PSTDMK; i++)
             {
-                TimerInit(i, (rand.Next(1, PSTDMK) * 100));
+                TimerInit(i, (rand.Next(0, 250)) );
             }
         }
-        void TimerInit(int index, int interval)
+        private void TimerInit(int index, int interval)
         {
             timer[index].Interval = interval;
 
@@ -39,14 +39,14 @@ namespace Matrix
 
             timer[index].Start();
         }
-        void ArrayTimerInit()
+        private void ArrayTimerInit()
         {
             for (int i = 0; i < timer.Length; i++)
             {
                 timer[i] = new Timer();
             }
         }
-        void ArrayLabelInit()
+        private void ArrayLabelInit()
         {
             for (int Y = 0; Y < labels.Length; Y++)
             {
@@ -66,17 +66,27 @@ namespace Matrix
         }
         private void update(object sender, EventArgs e)
         {
-            if (sender == timer[4])
+            for (int i = 0; i < timer.Length; i++)
             {
-                int y = lblHight[0];
+                Step(sender, i);
+            }
+        }
 
-                labels[y][1].Text = GetRandString();
+        private void Step(object sender, int x)
+        {
+            if (sender == timer[x])
+            {
+                int Y = lblHight[x];
 
-                lblHight[0]++;
+                int X = x * 5;
 
-                if (lblHight[0] == HIGHT)
+                labels[Y][X].Text = GetRandString();
+
+                lblHight[x]++;
+
+                if (lblHight[x] == HIGHT)
                 {
-                    lblHight[0] = 0;
+                    lblHight[x] = 0;
                 }
             }
         }
