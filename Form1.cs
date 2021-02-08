@@ -13,6 +13,8 @@ namespace Matrix
 
         Random rand      = new Random();
 
+        int[] Count      = new int[RUN_CHAR];
+
         int[] runPst     = new int[RUN_CHAR];
 
         int[] xCordRnd   = new int[RUN_CHAR];
@@ -30,7 +32,7 @@ namespace Matrix
 
             for (int i = 0; i < RUN_CHAR; i++)
             {
-                TimerInit(i, (rand.Next(0, 250)) );
+                TimerInit(i, (rand.Next(0, 500)) );
             }
         }
         private void TimerInit(int index, int interval)
@@ -80,11 +82,35 @@ namespace Matrix
         {
             if (sender == timer[Y])
             {
-                labels[runPst[Y]][Y * 2 + xCordRnd[Y]].Text = GetRandString();
+                labels[ runPst[Y] ][ Y * 2 + xCordRnd[Y] ].Text      = GetRandString();
+                labels[ runPst[Y] ][ Y * 2 + xCordRnd[Y] ].ForeColor = Color.White;
+
+                if (runPst[Y] > 0)
+                {
+                    labels[runPst[Y] - 1][Y * 2 + xCordRnd[Y]].ForeColor = Color.LightGreen;
+                    labels[runPst[Y] - 1][Y * 2 + xCordRnd[Y]].Text      = GetRandString();
+                }
+
+                if (runPst[Y] > 1)
+                {
+                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].ForeColor = Color.Green;
+                    labels[runPst[Y] - 2][Y * 2 + xCordRnd[Y]].Text      = GetRandString();
+                }
+
+                if (runPst[Y] > 5)
+                {
+                    labels[runPst[Y] - 6][Y * 2 + xCordRnd[Y]].Text      = " ";
+                }
 
                 if (runPst[Y] < HIGHT - 1)
                 {
-                    runPst[Y]++;
+                    if (Count[Y] > 2)
+                    {
+                        runPst[Y]++;
+
+                        Count[Y] = 0;
+                    }
+                    else Count[Y]++;
                 }
                 else
                 {
