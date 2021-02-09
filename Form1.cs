@@ -72,7 +72,7 @@ namespace Matrix
                 for (int X = 0; X < labels[0].Length; X++)
                 {
                     labels[Y][X]           = new Label();
-                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 14F);
+                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 30F);
                     labels[Y][X].Text      = "";                    
                     labels[Y][X].AutoSize  = true;                    
                     labels[Y][X].Location  = new Point(X * SIZE, Y * SIZE);
@@ -107,17 +107,9 @@ namespace Matrix
 
                 if (timer[Y].Interval < 50)
                 {
-                    if (runPst[Y] > 4)
+                    if (runPst[Y] > 6)
                     {
-                        labels[ runPst[Y] - 5 ][ cordX[Y] ].Text = "";
-                    }
-                }
-
-                if (timer[Y].Interval > 50 && timer[Y].Interval < 200)
-                {
-                    if (runPst[Y] > 12)
-                    {
-                        labels[runPst[Y] - 13][ cordX[Y] ].Text = "";
+                        labels[ runPst[Y] - 7 ][ cordX[Y] ].Text = "";
                     }
                 }
 
