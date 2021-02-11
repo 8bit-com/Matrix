@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using static Matrix.Const;
+using static Matrix.Func;
 
 namespace Matrix
 {
@@ -10,8 +11,6 @@ namespace Matrix
         Label[][] labels = new Label[HIGHT][];
 
         Timer[] timer    = new Timer[RUN_CHAR];
-
-        Random rand      = new Random();
 
         int[] cordX      = new int[RUN_CHAR];
 
@@ -24,118 +23,79 @@ namespace Matrix
         }
         private void Init()
         {
-            ArrayLabelInit();
-
-            ArrayTimerInit();
-
-            ArrayCordXInit();
-
-            for (int i = 0; i < RUN_CHAR; i++)
-            {
-                TimerInit(i, RandIntrv());
-            }
-        }
-        private void ArrayCordXInit()
-        {
-            for (int i = 0; i < cordX.Length; i++)
-            {
-                cordX[i] = 10;
-            }
-        }
-        private int  RandIntrv()
-        {
-            int i = rand.Next(0, 10);
-
-            return i == 0 ? 1: rand.Next(0, 300);
-        }
-        private void TimerInit(int index, int interval)
-        {
-            timer[index].Interval = interval;
-
-            timer[index].Tick    += new EventHandler(update);
-
-            timer[index].Start();
-        }
-        private void ArrayTimerInit()
-        {
-            for (int i = 0; i < timer.Length; i++)
-            {
-                timer[i] = new Timer();
-            }
-        }
-        private void ArrayLabelInit()
-        {
+            //Создаём матрицу lables для дальнейшей отрисовки символов
             for (int Y = 0; Y < labels.Length; Y++)
             {
                 labels[Y] = new Label[WIDTH];
 
                 for (int X = 0; X < labels[0].Length; X++)
                 {
-                    labels[Y][X]           = new Label();
-                    labels[Y][X].Font      = new Font(labels[Y][X].Font.Name, 30F);
-                    labels[Y][X].Text      = "";                    
-                    labels[Y][X].AutoSize  = true;                    
-                    labels[Y][X].Location  = new Point(X * SIZE, Y * SIZE);
+                    labels[Y][X] = new Label();
+                    labels[Y][X].Font = new Font("", 30F);
+                    labels[Y][X].AutoSize = true;
+                    labels[Y][X].Location = new Point(X * SIZE, Y * SIZE);
                     Controls.Add(labels[Y][X]);
                 }
+            }
+
+            //Создаём массив таймеров для рассинхронизирования отрисовки lables
+            for (int i = 0; i < RUN_CHAR; i++)
+            {
+                timer[i]          = new Timer();
+
+                timer[i].Tick    += new EventHandler(update);
+
+                timer[i].Start();
             }
         }
         private void update(object sender, EventArgs e)
         {
+            //Выбираем таймер
             for (int i = 0; i < timer.Length; i++)
             {
-                Step(sender, i);
-            }
-        }
-        private void Step(object sender, int Y)
-        {
-            if (sender == timer[Y])
-            {
-                labels[ runPst[Y] ][ cordX[Y] ].Text      = GetRandString();
-                labels[ runPst[Y] ][ cordX[Y] ].ForeColor = Color.White;
-
-                if (runPst[Y] > 0)
+                if (sender == timer[i])
                 {
-                    labels[ runPst[Y] - 1 ][ cordX[Y] ].ForeColor = Color.LightGreen;
-                    labels[ runPst[Y] - 1 ][ cordX[Y] ].Text      = GetRandString();
-                }
+                    //Устанавливаем в первый символ рандомное значение
+                    labels[runPst[i]][cordX[i]].Text      = GetRandString();
+                    labels[runPst[i]][cordX[i]].ForeColor = Color.White;
 
-                if (runPst[Y] > 1)
-                {
-                    labels[ runPst[Y] - 2 ][ cordX[Y] ].ForeColor = Color.DarkGreen;
-                }
-
-                if (timer[Y].Interval < 50)
-                {
-                    if (runPst[Y] > 6)
+                    //Меням цвет вышестоящих символов
+                    if (runPst[i] > 0)
                     {
-                        labels[ runPst[Y] - 7 ][ cordX[Y] ].Text = "";
+                        labels[runPst[i] - 1][cordX[i]].ForeColor = Color.LightGreen;
+
+                        if (runPst[i] > 1)
+                        {
+                            labels[runPst[i] - 2][cordX[i]].ForeColor = Color.DarkGreen;
+                        }
+                    }
+
+                    //Удаляем символы если Interval меньше 100 
+                    if (timer[i].Interval < 100 && runPst[i] > 6)
+                    {
+                        labels[runPst[i] - 7][cordX[i]].Text = "";
+                    }
+
+                    //Делаем шаг вниз если не конец, иначе обнуляем
+                    if (runPst[i] < HIGHT - 1)
+                    {
+                        runPst[i]++;
+                    }
+                    else
+                    {
+                        for (int ind = 0; ind < 13; ind++)
+                        {
+                            labels[runPst[i] - ind][cordX[i]].Text = "";
+                        }
+
+                        runPst[i] = 0;
+
+                        cordX[i] = rand.Next(0, WIDTH);
+
+                        timer[i].Interval = rand.Next(5, 20) * 10;
                     }
                 }
-
-                if (runPst[Y] < HIGHT - 1)
-                {
-                    runPst[Y]++;                    
-                }
-                else
-                {
-                    for (int i = 0; i < 13; i++)
-                    {
-                        labels[runPst[Y] - i][ cordX[Y] ].Text = "";
-                    }
-                    
-                    runPst[Y] = 0;
-
-                    cordX[Y] = rand.Next(0, WIDTH);
-                }
             }
-        }
-        private string GetRandString()
-        {
-            if (rand.Next(0, 2) == 1)
-                return ((char)rand.Next(BGN_KTK, END_KTK)).ToString();
-            else
-                return rand.Next(0, 10).ToString();
         }
     }
 }
